@@ -4,12 +4,16 @@ let secretNumber = generateNumber();
 
 const input = document.getElementById("guess");
 const message = document.getElementById("message");
+const checkBtn = document.getElementById("check");
+const restartBtn = document.getElementById("restart");
 
-document.getElementById("check").addEventListener("click", () => {
+// CHECK BUTTON
+checkBtn.addEventListener("click", () => {
     const guess = Number(input.value);
 
-    if (!guess) {
-        message.textContent = "❗ Son kiriting!";
+    // ✅ FIXED validation
+    if (input.value === "" || guess < 1 || guess > 100) {
+        message.textContent = "❗ 1 dan 100 gacha son kiriting!";
         return;
     }
 
@@ -17,6 +21,7 @@ document.getElementById("check").addEventListener("click", () => {
 
     if (result === "correct") {
         message.textContent = "🎉 To‘g‘ri topding!";
+        input.disabled = true; // optional improvement
     } else if (result === "high") {
         message.textContent = "📉 Juda katta!";
     } else {
@@ -24,8 +29,10 @@ document.getElementById("check").addEventListener("click", () => {
     }
 });
 
-document.getElementById("restart").addEventListener("click", () => {
+// RESTART BUTTON
+restartBtn.addEventListener("click", () => {
     secretNumber = generateNumber();
     message.textContent = "🔄 Yangi o‘yin boshlandi!";
     input.value = "";
+    input.disabled = false;
 });
